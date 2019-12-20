@@ -41,6 +41,7 @@ void loop() {
   Wire.write(0x3B); // Start with register 0x3B (ACCEL_XOUT_H)
   Wire.endTransmission(false);
   Wire.requestFrom(MPU, 6, true); // Read 6 registers total, each axis value is stored in 2 registers
+
   //For a range of +-2g, we need to divide the raw values by 16384, according to the datasheet
   AccX = (Wire.read() << 8 | Wire.read()) / 16384.0; // X-axis value
   AccY = (Wire.read() << 8 | Wire.read()) / 16384.0; // Y-axis value
@@ -72,22 +73,23 @@ void loop() {
   pitch = 0.96 * gyroAngleY + 0.04 * accAngleY;
 
 
+       
+
 char buff[10];
 
-  
-
-//  Serial.write(dtostrf(roll, 4, 6, buff));  //Char'a çevirdik
-//  Serial.write("/");
-//  Serial.println(dtostrf(roll, 4, 6, buff));
+  Serial.write(dtostrf(roll, 4, 6, buff));  //Char'a çevirdik
+  Serial.write("/");
+  //Serial.print(dtostrf(roll, 4, 6, buff));
 
   Serial.write(dtostrf(pitch, 4, 6, buff));
   Serial.write("/");
-  Serial.println(dtostrf(pitch, 4, 6, buff));
-//  
-//
-//  Serial.write(dtostrf(yaw, 4, 6, buff));
-//  Serial.write("/");
-//  Serial.println(dtostrf(yaw, 4, 6, buff));
+  //Serial.print(dtostrf(pitch, 4, 6, buff));
+  
+  Serial.write(dtostrf(yaw, 4, 6, buff));
+  //Serial.write("/");
+  //Serial.print(dtostrf(yaw, 4, 6, buff));
+
+  Serial.println("");
  
 }
 void calculate_IMU_error() {
