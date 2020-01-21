@@ -10,7 +10,17 @@ void setup()
 {
   size(900, 900, P3D);
   // if you have only ONE serial port active
-  myPort = new Serial(this, Serial.list()[0], 9600); // if you have only ONE serial port active
+  
+  //ArrayList ports = new ArrayList<>();
+  //ports = Serial.list();
+  
+   String[] list;
+   list = Serial.list();
+  
+  if(list.length > 0)
+    myPort = new Serial(this, Serial.list()[0], 9600); // if you have only ONE serial port active
+  
+  
   // if you know the serial port name
   //myPort = new Serial(this, "COM6:", 9600);        // Windows "COM#:"
   //myPort = new Serial(this, "\\\\.\\COM41", 9600); // Windows, COM10 or higher
@@ -22,7 +32,11 @@ void setup()
 
 void draw()
 {
-  serialEvent();  // read and parse incoming serial message
+  
+  if(myPort != null)
+    serialEvent();  // read and parse incoming serial message
+  
+  
   background(255); // set background to white
   lights();
   translate(width/2, height/2); // set position to centre
@@ -137,6 +151,8 @@ void drawCylinder( int sides, float r1, float r2, float h)
 
 void serialEvent()
 {
+  
+ 
   int newLine = 13; // new line character in ASCII
   String message;
   do {
